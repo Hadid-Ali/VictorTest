@@ -4,28 +4,17 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class RemoteColorApplier : ColorApplierBase
+public class RemoteColorApplier : ColorApplierBase,IColorMediatorComponent
 {
     [SerializeField] private string _apiURL = "http://localhost:8000/color";
     [SerializeField] private int _requestTimeOutDuration = 10;
-
-    private bool _isSubscribed = false;
     
     private void Start()
     {
         StartCoroutine(FetchAndApplyColor());
     }
 
-
-    private void OnValidate()
-    {
-        if (_isSubscribed)
-            return;
-
-        ColorCollectionApplier.ColorChanged += OnColorChanged;
-    }
-
-    private void OnColorChanged(Color color)
+    void IColorMediatorComponent.ApplyColorStyle(Color color)
     {
         StartCoroutine(PostColorToServer(color));
     }

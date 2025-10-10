@@ -4,13 +4,14 @@ using UnityEngine;
 public class ColorCollectionApplier : ColorApplierBase
 {
     [field: SerializeField] public ColorObject[] Colors { get; private set; }
-
-    public static Action<Color> ColorChanged { get; set; }
     
     public override void ApplyColor(Color color)
     {
         base.ApplyColor(color);
-        ColorChanged?.Invoke(color);
+        if (TryGetComponent(out IColorMediatorComponent colorMediatorComponent))
+        {
+            colorMediatorComponent.ApplyColorStyle(color);
+        }
     }
 
     public void Reset()
