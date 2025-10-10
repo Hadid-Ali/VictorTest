@@ -27,7 +27,7 @@ public class ColorCollectionApplierEditor : Editor
         GUILayout.Space(10);
         if (GUILayout.Button("Reset"))
         {
-            _colorCollectionApplier.ApplyColor(Color.white);
+            _colorCollectionApplier.Reset();
         }
     }
 }
